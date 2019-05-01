@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% if title %}
+		<title>LostAndFound - {{ title }}</title>
+	{% else %}
+		<title>LostAndFound</title>
+	{% endif %}
+	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/uikit.min.css') }}">
+	<link rel='stylesheet' type='text/css' href="{{ url_for('static',filename='css/main.css') }}">
+    <link rel='stylesheet' type='text/css' href="{{ url_for('static',filename='css/iziToast.css') }}">
+	<link href='https://fonts.googleapis.com/css?family=Google+Sans' rel='stylesheet' type='text/css'>
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/uikit.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/uikit-icons.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/iziToast.js') }}"></script>
+    <style type="text/css">
+        
+        {% if current_user.is_authenticated %}
+            .tm-main{
+                padding-left: 200px;
+            }
+            @media only screen and (max-width : 992px) {
+              .tm-main {
+                padding-left: 0;
+              }
+            } 
+        {% endif %}
+        
+    </style>
+
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        <!--show navigation bar-->
+        <nav class="uk-navbar-container" uk-navbar style="background-color: rgb(102, 140, 255);height: 50px;">
+             <div class="uk-navbar-left">
+                <a class="uk-navbar-item" href="#offcanvas-slide" uk-toggle>
+                    <span style="color: #fff;" uk-icon="icon:menu" uk-tooltip="title:Menu;pos:bottom" class="uk-hidden@s"></span>
+                </a>
+                <!-- side nav-->
+                <div id="offcanvas-slide" uk-offcanvas>
+                    <div class="uk-offcanvas-bar">
+                        <ul class="uk-nav uk-nav-default">
+                            <li><a href="{{ url_for('users.home') }}">Dashboard</a></li>
+                            <li><a href="{{ url_for('items.lost_items') }}">Lost items</a></li>
+                            <li><a href="{{ url_for('items.found_items') }}">Found items</a></li>
+                            <li><a href="{{ url_for('items.new_lost_item') }}">Add lost item</a></li>
+                            <li><a href="{{ url_for('items.new_found_item')}}">Add found item</a></li>
+                            <li><a href="{{ url_for('users.user_items',username=current_user.username) }}">My items</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="{{ url_for('users.logout') }}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-navbar-right">
+
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="#">
+                            <img src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}" height="30" width="30" style="border-radius: 50%;">&nbsp;
+                           {{ current_user.username }}&nbsp;<span uk-icon="icon:chevron-down"></span></a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li>
+                                    <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="{{ url_for('users.account') }}">
+                                        <span uk-icon="user"></span>&nbsp;Account
+                                    </a>
+                                </li>
+                                <li>
+                                    <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="{{ url_for('users.update_profile_picture') }}" uk-toggle>
+                                        <span uk-icon="icon:happy"></span>&nbsp;Profile picture
+                                    </a>
+                                    
+                                </li>
+                                <li>
+                                    <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="{{ url_for('users.changepassword') }}">
+                                        <span uk-icon="lock"></span>&nbsp;Change password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="{{ url_for('users.logout') }}">
+                                        <span uk-icon="sign-out"></span>&nbsp;Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+        <!--side nav-->
+        <div class="tm-sidebar-left uk-visible@m" style=" position: fixed;top: 50px;bottom: 0;box-sizing: border-box;width: 200px !important;padding: 40px 40px 60px 26px;overflow: auto;background-color: #fff;">
+           <ul class="uk-nav uk-nav-default tm-nav uk-nav-parent-icon" uk-nav>
+            <li class="">
+                <a href="{{ url_for('users.home') }}" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">
+                    Dashboard
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ url_for('items.lost_items') }}" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">
+                  Lost items
+                </a>
+            </li>
+             <li class="">
+                <a href="{{ url_for('items.found_items') }}" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">
+                   Found items
+                </a>
+            </li>
+            <li class="uk-parent">
+                <a href="#" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">Add item</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="{{ url_for('items.new_lost_item') }}"><span uk-icon="icon:plus;ratio:0.5"></span>&nbsp;Lost item</a></li>
+                    <li><a href="{{ url_for('items.new_found_item') }}"><span uk-icon="icon:plus;ratio:0.5"></span>&nbsp;Found item</a></li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="{{ url_for('users.user_items',username=current_user.username) }}" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">
+                    My items
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ url_for('users.account') }}" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">
+                    Account
+                </a>
+            </li>
+            <div class="uk-nav-divider"></div>
+            <li class="">
+                <a href="{{ url_for('users.logout') }}" style="letter-spacing: .01785714em;font-weight: 550;color: #202124;">
+                    <span uk-icon="icon:sign-out"></span>&nbsp;Log out
+                </a>
+            </li>
+           </ul>
+        </div>
+    {% endif %}
+    <div class="tm-main uk-section uk-section-default" style="margin-top: -20px;">
+       <div class="uk-container uk-container-small uk-position-relative">
+        {% block content %}
+        {% endblock content %}
+       </div>
+    </div>
+</body>
+</html>

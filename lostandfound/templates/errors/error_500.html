@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+	<!--404 error-->
+	<h1 style="font-family: 'Google Sans';color: #f0506e;">
+		Oops. Something went wrong.Try again after some time (500).&nbsp;
+		{% if not current_user.is_authenticated %}
+			<a style="font-size: 14px;" href="{{ url_for('users.index') }}">Return to log in</a>
+		{% endif %}
+		<br>
+	</h1>
+	
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="uk-container">
+		<div class="uk-grid">
+			<div class="uk-width-1-4@s">
+				 
+			</div>
+			<div class="uk-width-1-2@s">
+				<h1 style="text-align: center;font-family: 'Google Sans';">MMU Lost and Found</h1>
+				{% include "_messages.html" %}
+				 <form novalidate method="POST" action="">
+				 	{{ form.hidden_tag() }}
+				 	<div class="uk-margin">
+				 		<span uk-icon="icon:user"></span>&nbsp;
+						{{ form.email.label(class="uk-form-label") }}
+						{{ form.email(class="uk-input",autocomplete="off") }}
+						<div>
+							{% if form.email.errors %}
+								{% for error in form.email.errors %}
+									<span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+					<div class="uk-margin">
+				 		<span uk-icon="icon:lock"></span>&nbsp;
+						{{ form.password.label(class="uk-form-label") }}
+						{{ form.password(class="uk-input",autocomplete="off") }}
+						<div>
+							{% if form.password.errors %}
+								{% for error in form.password.errors %}
+									<span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+					<div class="uk-margin">
+						{{ form.remember(type="checkbox", class="uk-checkbox",style="text-transform:none;") }}
+						{{ form.remember.label(class="uk-form-label") }}
+					</div>
+					<div class="uk-margin">
+						{{ form.submit(class="uk-button uk-button-primary",style="text-transform:none;") }}
+					</div>
+					<div class="uk-margin">
+						<a href="{{ url_for('users.forgotpassword') }}" class="uk-link" style="text-decoration: none;">Forgot password</a>
+						<a href="{{ url_for('users.register') }}" class="uk-link uk-align-right" style="text-decoration: none;">Create account</a>
+					</div>
+				 </form>
+				
+			</div>
+			<div class="uk-width-1-4@s">
+				
+			</div>
+		</div>
+	</div>
+{% endblock content %}

@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div uk-grid>
+       <div class="uk-width-1-1@s">
+        <h1 style="font-family: 'Google Sans';">
+            <span uk-icon="icon:plus"></span>
+            Report lost item
+        </h1>
+        <form novalidate method="POST" action="" enctype="multipart/form-data" uk-grid>
+            {{ form.hidden_tag() }}
+            <div class="uk-width-1-2@s">
+                <div class="uk-margin">
+                    {{ form.name.label(class="uk-form-label") }}
+                    {{ form.name(class="uk-input",autocomplete="off") }}
+                    <div>
+                        {% if form.name.errors %}
+                            {% for error in form.name.errors %}
+                                <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2@s">
+                <div class="uk-margin">
+                    {{ form.place_lost.label(class="uk-form-label") }}
+                    {{ form.place_lost(class="uk-select") }}
+                    <div>
+                        {% if form.place_lost.errors %}
+                            {% for error in form.place_lost.errors %}
+                                <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-1">
+                <div class="uk-margin">
+                    {{ form.description.label(class="uk-form-label") }}
+                    {{ form.description(class="uk-textarea",autocomplete="off") }}
+                    <div>
+                        {% if form.description.errors %}
+                            {% for error in form.description.errors %}
+                                <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-1">
+                <div class="uk-margin">
+                    {{ form.picture.label(class="uk-form-label") }}<br>
+                    <div uk-form-custom>
+                        
+                        {{ form.picture }}
+                        <button class="uk-button uk-button-danger" type="button" tabindex="-1">Select</button>
+                    </div>
+                    <div>
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span><br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                 </div>
+            </div>
+            <div class="uk-margin">
+                {{ form.submit(class="uk-button uk-button-primary",style="text-transform:none;") }}
+            </div>
+        </form>
+       </div>
+    </div>
+{% endblock content %}

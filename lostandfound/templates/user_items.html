@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% include "_messages.html" %}
+	<div uk-grid class="uk-width-1-1">
+		{% if items.total == 0 %}
+			<script type="text/javascript">
+				UIkit.notification({message: '<span uk-icon=\'icon: info\'></span> No items to show','status':'primary'})
+			</script>
+		{% endif %}
+		{% for item in items.items %}
+			<div class="uk-width-1-2@s">
+				<div style="box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 none;" class="uk-card uk-card-default">
+					<div class="uk-card-header">
+						<div class="uk-grid-small uk-flex-middle" uk-grid>
+				            <div class="uk-width-auto">
+				                <img width="40" height="40" src="{{ url_for('static',filename='item_pics/' + item.item_image) }}">
+				                {% if item.item_image != "default.png" %}
+					                <div uk-drop="animation: uk-animation-slide-top-small; duration: 1000;pos:right-center">
+					                	<img src="{{ url_for('static',filename='item_pics/'+ item.item_image) }}">
+					                </div>
+					            {% else %}
+					            	<div uk-drop="animation: uk-animation-slide-top-small; duration: 1000;pos:bottom-center">
+					                	<div class="uk-card uk-card-default uk-card-body uk-card-small">
+					                		<h3 style="font-family: 'Google Sans';font-size: 15px;color: #4183c4;">
+					                			<span style="color:orange;" uk-icon="icon:info"></span>&nbsp;Picture not available
+					                		</h3>
+					                	</div>
+					                </div>
+					            {% endif %}
+				            </div>
+				            <div class="uk-width-expand">
+				                <h3 class="uk-card-title uk-margin-remove-bottom" style="font-family: 'Google Sans';">{{ item.name }}</h3>
+				                <p class="uk-text-meta uk-margin-remove-top"><span>Lost at the  {{ item.place_lost }}</span>
+				                	<span uk-icon="icon:more-vertical" class="uk-align-right" style="cursor: pointer" uk-tooltip="title:More actions;pos:top"></span>
+					                	<div class="uk-navbar-dropdown" uk-drop="animation: uk-animation-slide-top-small; duration: 1000">
+				                            <ul class="uk-nav uk-navbar-dropdown-nav">
+
+				                            	{% if item.owner == current_user %}
+				                            		<li>
+					                                    <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="{{ url_for('items.update_lost_item',item_id=item.id) }}">
+					                                       <span uk-icon="icon:pencil"></span>&nbsp;Edit
+					                                    </a>
+				                                	</li>
+				                                	<li>
+					                                    <a style="color: rgba(0,0,0,.54);font-family: 'Google Sans';text-transform: none;" href="#delete-item-modal" uk-toggle>
+					                                       <span uk-icon="icon:trash"></span>&nbsp;Delete
+					                                    </a>
+					                                    <!-- Item deletion confirmation -->
+														<div id="delete-item-modal" class="uk-flex-top" uk-modal>
+														    <div class="uk-modal-dialog uk-modal-body">
+														        <h2 class="uk-modal-title" style="font-family: 'Google Sans';font-size: 15px;">Delete item?</h2>
+														        <button class="uk-modal-close-outside" type="button" uk-close></button>
+														        <div class="uk-modal-footer">
+														        	<form method="POST" action="{{ url_for('items.delete_lost_item',item_id=item.id) }}">
+														        		<button class="uk-button uk-button-danger uk-align-right" style="text-transform: none;border-radius: 50px;">
+															        		<span uk-icon="icon:check"></span>&nbsp;
+															        		Confirm
+														        		</button>
+														        	</form>
+														        </div>
+														    </div>
+														</div>
+				                                	</li>
+				                            	{% endif %}
+				                            </ul>
+	                       			 </div>
+				                </p>
+				            </div>
+        				</div>
+					</div>
+					<div class="uk-card-body">
+						<p>{{item.description }}</p>
+					</div>
+				</div>
+			</div>
+			
+		{% endfor %}
+		<div class="uk-width-1-1">
+			<ul class="uk-pagination uk-flex-right">
+				{% for page in items.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+					{% if page %}
+						{% if items.page == page%}
+							<li>
+								<a style="border-radius: 50px;" class="uk-button uk-button-danger uk-active" href="{{ url_for('users.user_items',username=user.username,page=page) }}">{{ page }}</a>
+							</li>
+						{% else %}
+							<li>
+								<a style="border-radius: 50px;" uk-tooltip="title:See more" class="uk-button uk-button-default" href="{{ url_for('users.user_items',username=user.username,page=page) }}">{{ page }}</a>
+							</li>
+						{% endif %}
+					{% else %}
+						...
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+		
+	</div>
+{% endblock content %}

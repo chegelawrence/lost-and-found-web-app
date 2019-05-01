@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% include "_messages.html" %}
+	<div class="uk-width-1-1" uk-grid>
+		<div class="uk-width-1-2">
+			<div class="uk-card uk-card-default uk-card-body" style="box-shadow: none;">
+				<form novalidate method="POST" enctype="multipart/form-data" action="" uk-grid>
+					 {{ form.hidden_tag() }}
+					<div class="uk-width-1-1">
+		                <div class="uk-margin">
+		                    <div uk-form-custom class="uk-align-center">
+		                        {{ form.picture }}
+		                        <img class="uk-animation-kenburns" class="" src="{{ url_for('static',filename='profile_pics/'+current_user.profile_image )}}" height="100" width="100" style="border-radius: 50px;">
+		                    </div>
+		                    <div>
+		                        {% if form.picture.errors %}
+		                            {% for error in form.picture.errors %}
+		                                <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span><br>
+		                            {% endfor %}
+		                        {% endif %}
+		                    </div>
+		                 </div>
+		                 <div class="uk-margin">
+                			{{ form.submit(class="uk-button uk-button-danger",style="text-transform:none;border-radius:50px;") }}
+            			 </div>
+            		</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

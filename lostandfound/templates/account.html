@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="uk-width-1-1@s">
+        <div class="container">
+            {% include "_messages.html" %}
+            <div class="uk-width-1-1">
+                <h1 style="font-family: 'Google Sans';"><span uk-icon="icon:user"></span>&nbsp;Account info
+                </h1>
+            </div>
+            <form novalidate method="POST" action="" enctype="multipart/form-data" uk-grid>
+                {{ form.hidden_tag() }}
+                <div class="uk-width-1-2@s">
+                    <div class="uk-margin">
+                        {{ form.username.label(class="uk-form-label") }}
+                        {{ form.username(class="uk-input",autocomplete="off") }}
+                        <div>
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                    <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-margin">
+                        {{ form.email.label(class="uk-form-label") }}
+                        {{ form.email(class="uk-input",autocomplete="off") }}
+                        <div>
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                    <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-margin">
+                        {{ form.phone.label(class="uk-form-label") }}
+                        {{ form.phone(class="uk-input",autocomplete="off") }}
+                        <div>
+                            {% if form.phone.errors %}
+                                {% for error in form.phone.errors %}
+                                    <span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1">
+                    <div class="uk-margin">
+                      {{ form.submit(class="uk-button uk-button-primary",style="text-transform:none;") }}
+                   </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% include "_messages.html" %}
+	<h1 style="font-family: 'Google Sans';">
+		<img style="border-radius: 50%;" height="40" width="40" src="{{ url_for('static',filename='profile_pics/'+current_user.profile_image) }}">
+		Welcome, {{ current_user.username }}
+	</h1>
+	<div class="uk-width-1-1" uk-grid>
+		<div class="uk-width-1-2@s">
+			<div class="uk-card uk-card-default uk-card-body" style="box-shadow: none;border:1px solid #dadce0;border-radius:5px;">
+				<h3 style="font-size:1.2rem;font-family: 'Google Sans';">Lost items</h3>
+			    <p>
+			    	View items that other students have lost and help them get the items back.
+			    </p>
+			    <a href="{{ url_for('items.lost_items') }}" class="uk-button uk-button-default" style="text-transform: none;border-radius: 4px;color: #1a73e8;">Get started</a>
+			</div>
+		</div>
+		<div class="uk-width-1-2@s">
+			<div class="uk-card uk-card-default uk-card-body" style="box-shadow: none;border:1px solid #dadce0;border-radius:5px;">
+				<h3 style="font-size:1.2rem;font-family: 'Google Sans';">Found items</h3>
+			    <p>
+			    	View found items here. You could find your recently lost phone here.
+			    </p>
+			    <a href="{{ url_for('items.found_items') }}" class="uk-button uk-button-default" style="text-transform: none;border-radius: 4px;color: #1a73e8;">Get started</a>
+			</div>
+		</div>
+		<div class="uk-width-1-1">
+			<div class="uk-alert-danger" uk-alert>
+				<p><i uk-icon="icon:warning"></i>&nbsp;Don't provide any sensitive information. eg. Room number when reporting lost keys.</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

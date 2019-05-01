@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="uk-container">
+		<div class="uk-grid">
+			<div class="uk-width-1-4@s">
+				 
+			</div>
+			<div class="uk-width-1-2@s">
+				{% include "_messages.html" %}
+				<!--<img class="uk-align-center" src="{{ url_for('static',filename='account.svg') }}" height="100px" width="100px">-->
+				<h1 style="font-family: 'Google Sans';">Enter the code sent to your phone</h1>
+				 <form novalidate method="POST" action="">
+				 	{{ form.hidden_tag() }}
+				 	<div class="uk-margin">
+						{{ form.verification_code.label(class="uk-form-label") }}
+						{{ form.verification_code(class="uk-input",autocomplete="off") }}
+						<div>
+							{% if form.verification_code.errors %}
+								{% for error in form.verification_code.errors %}
+									<span class="help-inline"><span uk-icon="icon:warning"></span>&nbsp;{{ error }}</span>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+					<div class="uk-margin ">
+						{{ form.submit(class="uk-button uk-button-danger",style="text-transform:none;border-radius:50px;") }}
+					</div>
+			 	
+				 </form>
+				
+			</div>
+			<div class="uk-width-1-4@s">
+				
+			</div>
+		</div>
+	</div>
+{% endblock content %}
