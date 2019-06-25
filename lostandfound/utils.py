@@ -6,8 +6,8 @@ from flask import current_app
 class SMS:
     def __init__(self):
     # Set your app credentials
-        self.username = 'kigunda'
-        self.api_key = '05d50b3ef2ff060b172639c87e8bc46a96dc6cadb70224025fe3f5b841a3b800'
+        self.username = '*****'
+        self.api_key = '****'
         # Initialize the SDK
         africastalking.initialize(self.username, self.api_key)
 
