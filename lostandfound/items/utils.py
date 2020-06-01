@@ -31,7 +31,7 @@ def delete_item_picture(item_picture):
 			pass
 
 def sendPushNotification():
-	pusher_client = pusher.Pusher(app_id=u'708780', key=u'1774431e5feb87294873', secret=u'39d9a3d02c9fda587899', cluster=u'us2',ssl=True)
+	pusher_client = pusher.Pusher(app_id=u'708780', key=u'1774431e5feb87294873', secret=u'******', cluster=u'us2',ssl=True)
 	return pusher_client
 
 
